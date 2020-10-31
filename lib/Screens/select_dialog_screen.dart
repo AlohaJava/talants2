@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:talants/MainStyle.dart';
 import 'package:talants/Screens/LoginScreen.dart';
+import 'package:talants/Screens/select_opponents_screen.dart';
 import 'package:talants/Screens/settings_screen.dart';
 import 'package:talants/utils/api_utils.dart';
 import 'package:talants/utils/consts.dart';
@@ -26,18 +27,40 @@ class SelectDialogScreen extends StatelessWidget {
     currentUser = LoginScreen.cubeUser;
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _onBackPressed(),
       child: Scaffold(
         appBar: AppBar(
+          leading: GestureDetector(
+              onTap: (){ Navigator.pop(context);},
+              child: Icon(Icons.arrow_back)
+          ),
           automaticallyImplyLeading: false,
           backgroundColor: MainStyle.primaryColor,
           title: Text(
             '${currentUser.fullName}',
           ),
-          actions: <Widget>[],
+          actions: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 8),
+              child: GestureDetector(
+                  onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectOpponentsScreen(),
+                        ),
+                      );
+                  },
+                  child: Icon(Icons.phone)
+              ),
+            )
+          ],
         ),
         body: Container(
             color: MainStyle.primaryColor,
@@ -57,7 +80,6 @@ class SelectDialogScreen extends StatelessWidget {
                 child: BodyLayout(currentUser)
             )
         ),
-        body: BodyLayout(currentUser),
       ),
     );
   }
@@ -168,8 +190,9 @@ class _BodyLayoutState extends State<BodyLayout> {
     if (_isDialogContinues && dialogList.isEmpty)
       return SizedBox.shrink();
     else if (dialogList.isEmpty)
-      return Center(
-        child: Text("Ещё нет диалогов", style: TextStyle(fontSize: 18)),
+      return FittedBox(
+        fit: BoxFit.contain,
+        child: Text("No dialogs yet"),
       );
     else
       return ListView.separated(
@@ -210,8 +233,8 @@ class _BodyLayoutState extends State<BodyLayout> {
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(themeColor),
             ),
-            width: 40.0,
-            height: 40.0,
+            width: 60.0,
+            height: 60,
             padding: EdgeInsets.all(70.0),
             decoration: BoxDecoration(
               color: greyColor2,
@@ -221,8 +244,8 @@ class _BodyLayoutState extends State<BodyLayout> {
             ),
           ),
           imageUrl: dialogList[index].data.photo,
-          width: 45.0,
-          height: 45.0,
+          width: 60.0,
+          height: 60.0,
           fit: BoxFit.cover,
         );
       }
@@ -254,7 +277,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                     ),
                     Container(
                       child: Text(
-                        '${dialogList[index].data.lastMessage ?? 'Не доступно'}',
+                        '${dialogList[index].data.lastMessage ?? 'Not available'}',
                         style: TextStyle(color: primaryColor),
                       ),
                       alignment: Alignment.centerLeft,

@@ -13,7 +13,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:talants/utils.dart';
 
 class EventScreen extends StatefulWidget {
+
   Event ActualEvent;
+
 
   EventScreen({
     this.ActualEvent,
@@ -52,7 +54,6 @@ class _EventScreenState extends State<EventScreen>
     color: Colors.white,
   );
 
-
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
@@ -75,18 +76,18 @@ class _EventScreenState extends State<EventScreen>
   @override
   Widget build(BuildContext context) {
    // getTests();
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: backArrow(context, 1),
-          title: Text(widget.ActualEvent.title), //AutoSizeText
-          backgroundColor: MainStyle.primaryColor,
-          centerTitle: true,
-        ),
-        body: buildContent());
+
+      return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            leading: backArrow(context, 1),
+            title: Text(widget.ActualEvent.title), //AutoSizeText
+            backgroundColor: MainStyle.primaryColor,
+            centerTitle: true,
+          ),
+          body: buildContent());
+
   }
-
-
 
   buildContent() {
     var size = MediaQuery.of(context).size;
@@ -101,32 +102,36 @@ class _EventScreenState extends State<EventScreen>
   Widget _buildMainBlock()
   {
     var size = MediaQuery.of(context).size;
-    return
-      Column(
+    return Column(
         children: [
           Container(height: size.height*0.03,),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(25.0),
-            child: Container(
-            //  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.0),),
-              child: Align(
-                alignment: Alignment.center,
-                widthFactor: 1,
-                heightFactor: 0.5,
-                child: Image.asset(widget.ActualEvent.image),
+          Container(
+            width: size.width*0.9,
+            height: size.height*0.25,
+            padding: EdgeInsets.all(5),
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: Container(
+                  width: size.width*0.9,
+                  height: size.height*0.25,
+                  //  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.0),),
+                  child: Image.asset(
+                    widget.ActualEvent.image,
+                    fit: BoxFit.cover ,
+                  ),
+                ),
               ),
             ),
           ),
+
           Container(height: size.height*0.03,),
           _buildTitle(),
           Container(height: size.height*0.03,),
           _buildText(),
         ],
-
       );
   }
-
-
 
   Widget _buildTitle() {
     return Text(
@@ -143,6 +148,5 @@ class _EventScreenState extends State<EventScreen>
       style: new TextStyle(fontFamily: 'Montserrat', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w300),
     );
   }
-
 
 }

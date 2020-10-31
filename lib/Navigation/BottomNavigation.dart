@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:talants/MainStyle.dart';
+import 'package:talants/Screens/LoginScreen.dart';
 import 'package:talants/Screens/NewsListScreen.dart';
 import 'package:talants/Screens/ProfileScreen.dart';
 import 'package:talants/Screens/TestListScreen.dart';
+import 'package:talants/Screens/settings_screen.dart';
 import 'package:talants/icons_master_icons.dart';
 import 'package:talants/Screens/select_dialog_screen.dart';
 import 'package:talants/Screens/TestSlideScreen.dart';
@@ -83,18 +85,33 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
   Widget build(BuildContext context) {
 
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: StyleColor.fone,
-        items: <Widget>[
-          Icon(IconsMaster.newspaper, size: 30),
-          Icon(IconsMaster.test, size: 30),
-          Icon(IconsMaster.chat, size: 30),
-          Icon(IconsMaster.user_1, size: 30),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.black,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(IconsMaster.newspaper, size: 30),
+              title: Text('Personal')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsMaster.test, size: 30),
+              title: Text('Personal')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsMaster.chat, size: 30),
+              title: Text('Personal')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsMaster.user_1, size: 30),
+              title: Text('Personal')
+          ),
         ],
-        onTap: (index) {
+        currentIndex: inerIndex,
+        selectedItemColor: MainStyle.primaryColor,
+        onTap: (index){
           setState(() {
-            print(index);
-            inerIndex = index;
+            inerIndex=index;
           });
         },
       ),

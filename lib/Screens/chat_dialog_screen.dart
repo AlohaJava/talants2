@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectycube_sdk/connectycube_calls.dart';
+import 'package:talants/CallScreen.dart';
 import 'package:talants/utils/consts.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:connectycube_sdk/connectycube_storage.dart';
@@ -16,6 +18,7 @@ import 'package:talants/widgets/full_photo.dart';
 import 'package:talants/widgets/loading.dart';
 
 import '../MainStyle.dart';
+import 'LoginScreen.dart';
 import 'chat_details_screen.dart';
 
 class ChatDialogScreen extends StatelessWidget {
@@ -23,6 +26,7 @@ class ChatDialogScreen extends StatelessWidget {
   CubeDialog _cubeDialog;
 
   ChatDialogScreen(this._cubeUser, this._cubeDialog);
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,7 @@ class ChatDialogScreen extends StatelessWidget {
         title: Text(
           _cubeDialog.name != null ? _cubeDialog.name : '',
         ),
-        centerTitle: false,
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             onPressed: () => _chatDetails(context),

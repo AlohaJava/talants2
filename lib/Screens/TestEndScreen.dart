@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,11 @@ class Event {
 }
 
 class TestEndScreen extends StatefulWidget {
-  TestEndScreen({Key key}) : super(key: key);
+  bool withTab = true;
+  TestEndScreen({
+    this.withTab = true,
+  });
+  //TestEndScreen({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _TestEndScreenState();
@@ -51,12 +57,17 @@ class _TestEndScreenState extends State<TestEndScreen> {
 
   List<Event> testList = [];
 
+  List<FileImage> _imageList = [];
+
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    testList.forEach((element) { _imageList.add(FileImage(File(element.image))); });
+    getTests();
+
   }
 
   void dispose() {
@@ -69,18 +80,23 @@ class _TestEndScreenState extends State<TestEndScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    getTests();
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: backArrow(context, 1),
-          title: Text("Рекомендации"),
-          backgroundColor: MainStyle.primaryColor,
-          centerTitle: true,
-        ),
-        body: buildPage());
+   // getTests();
+    if (widget.withTab)
+      return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            leading: backArrow(context, 1),
+            title: Text("Рекомендации"),
+            backgroundColor: MainStyle.primaryColor,
+            centerTitle: true,
+          ),
+          body: buildPage());
+    else
+      return buildContent();
+
   }
 
   buildPage() => Stack(
@@ -89,21 +105,34 @@ class _TestEndScreenState extends State<TestEndScreen> {
 
   buildContent() {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Container(
-          margin: EdgeInsets.only(left: 20,right: 20),
-          child: _buildMainList()
-      ),
+    return Expanded(
+
+          child: Column(
+            children: [
+              Container(height: 20,),
+              Center(child: Text("Наставники для вас:", style: TextStyle(fontFamily: "Montserrat", fontSize: 26))),
+              Container(height: 10,),
+              Container(child: SizedBox(height: 110, width: size.width, child: _buildChatsList(),)),
+
+              Container(height: 20,),
+              Center(child: Text("События для вас:", style: TextStyle(fontFamily: "Montserrat", fontSize: 26))),
+              Container(height: 10,),
+              Expanded(child: _buildMainList()),
+            ],
+          )
     );
   }
 
-  getTests() async{
+  getTests() {
     setState(() {
       testList = [
-        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/Acula.png", "Simple"),
-        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/Acula.png", "Simple"),
-        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/Acula.png", "Big"),
-        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/Acula.png", "Simple"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Simple"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Simple"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Big"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Simple"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Big"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Simple"),
+        Event("Олимпиада по информатике", "2020.12.30 будет проведенна олимпиада по информатики. Для участия в олимпиаде вам необходимо подать заявку на сайте www.olip.com", "assets/images/books.png", "Simple"),
       ];
     });
   }
@@ -116,15 +145,15 @@ class _TestEndScreenState extends State<TestEndScreen> {
       );
     }
     List<Widget> list = List<Widget>();
-    list.add(Container(height: 20,));
-    list.add(Center(child: Text("Ваши рекомендации:", style: TextStyle(fontSize: 26))));
-    list.add(Container(height: 10,));
     for (int i = 0; i < testList.length; i++) {
       list.add(_buildEvent(context, i));
     }
+    list.add(Container(height: 20,));
     var size = MediaQuery.of(context).size;
-    return Column(
-      children: list,
+    return SingleChildScrollView(
+      child: Column(
+        children: list,
+      ),
     );
   }
 
@@ -136,6 +165,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
 
     return Container();
   }
+
   Widget _buildEventSmall(BuildContext context, int index) {
     var size = MediaQuery.of(context).size;
     return GestureDetector(
@@ -143,9 +173,9 @@ class _TestEndScreenState extends State<TestEndScreen> {
         Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: EventScreen(ActualEvent : testList[index])) )
       },
       child: Container(
+          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
         width: size.width,
         height: 70,
-        margin: EdgeInsets.only(top: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)), //here
           color: Colors.white ,
@@ -155,11 +185,22 @@ class _TestEndScreenState extends State<TestEndScreen> {
         child: Row(
           children: [
             Container(
+              width: 70,
+              height: 70,
               padding: EdgeInsets.all(5),
               child: Center(
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(75.0),
-                    child:  Image.asset(testList[index].image)),
+                  borderRadius: BorderRadius.circular(45.0),
+                  child: Container(
+                    width: 70,
+                    height: 70,
+                    //  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.0),),
+                      child: Image.asset(
+                          testList[index].image,
+                          fit: BoxFit.cover ,
+                      ),
+                  ),
+                ),
               ),
             ),
             Container(width: 10,),
@@ -212,26 +253,36 @@ class _TestEndScreenState extends State<TestEndScreen> {
   Widget _buildEventBig(BuildContext context, int index) {
     var size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => { Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: EventScreen(ActualEvent : testList[index])) )
-      },
+      onTap: () => { Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: EventScreen(ActualEvent : testList[index])))},
       child: Container(
           width: size.width,
           height: 120,
-          margin: EdgeInsets.only(top: 20, bottom: 10),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)), //here
-            color: Colors.white ,
+            color: Colors.white,
             boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(4,4), blurRadius: 8 )],
             //  border: Border.all(color: Colors.black54, width: 1, )
           ),
           child: Row(
             children: [
               Container(
+                width: 120,
+                height: 120,
                 padding: EdgeInsets.all(10),
                 child: Center(
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25.0),
-                      child:  Image.asset(testList[index].image)),
+                    borderRadius: BorderRadius.circular(25.0),
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      //  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.0),),
+                      child: Image.asset(
+                        testList[index].image,
+                        fit: BoxFit.cover ,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Container(width: 10,),
@@ -279,5 +330,87 @@ class _TestEndScreenState extends State<TestEndScreen> {
       ),
     );
   }
+
+
+  Widget _buildChatsList() {
+    List<Widget> list = List<Widget>();
+
+    list.add(Container(width: 20,));
+    for (int i = 0; i < testList.length; i++) {
+      list.add(_buildChats(context, i));
+    }
+    list.add(Container(width: 20,));
+    var size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: list,
+      ),
+    );
+  }
+
+  Widget _buildChats(BuildContext context, int index) {
+    var size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () => {
+      //  Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: EventScreen(ActualEvent : testList[index])) )
+      },
+      child: Container(
+        width: 90,
+        height: 90,
+        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(50.0)),),
+        padding: EdgeInsets.all(5),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                width: 75,
+                height: 75,
+                padding: EdgeInsets.all(0),
+                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(75.0)),
+                  boxShadow: [BoxShadow(color: Colors.black54, offset: Offset(2,2), blurRadius: 5 )],),
+
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(75.0),
+                    child: Container(
+                      width: size.width*0.9,
+                      height: size.height*0.25,
+                      //  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.0),),
+                      child: Image.asset(
+                        "assets/images/Acula.png",
+                        fit: BoxFit.cover ,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  color: Colors.white,
+                ),
+                margin: EdgeInsets.all(2),
+                child: Center(
+                  child: Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      color: Colors.green,
+                    ),)
+                ),
+              ),
+            ),
+          ],
+        ),
+      ));
+  }
+
+
+  int choosenPodScreen = 0;
 
 }

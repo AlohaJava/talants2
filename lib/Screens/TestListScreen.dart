@@ -49,7 +49,7 @@ class _TestListScreenState extends State<TestListScreen> {
   _TestListScreenState() {}
 
   final TextStyle _titleStyle = TextStyle(
-   // fontFamily: 'Regular',
+    // fontFamily: 'Regular',
     fontWeight: FontWeight.w300,
     fontSize: 22,
     color: Colors.black87,
@@ -100,11 +100,9 @@ class _TestListScreenState extends State<TestListScreen> {
 
   buildContent() {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Container(
-          margin: EdgeInsets.only(left: 20,right: 20),
-          child:_buildMainList()
-      ),
+    return Container(
+        //  margin: EdgeInsets.only(left: 20,right: 20),
+          child: Expanded(child: _buildMainList())
     );
   }
 
@@ -116,6 +114,16 @@ class _TestListScreenState extends State<TestListScreen> {
           QuestionSingleChoose("Сколько слогов в слове дерево? Выберети вариант:", ["-1","0","1","3"]),
           QuestionMultyChoose("Выберети несколько вариантов:", ["-1","0","1","3"]),
           QuestionText("Как правильно писать слово?"),
+        ]),
+        Test("Тест граматику", 2, [
+          QuestionText("Как правильно писать слово?"),
+          QuestionSingleChoose("Сколько слогов в слове дерево? Выберети вариант:", ["-1","0","1","3"]),
+          QuestionMultyChoose("Выберети несколько вариантов:", ["-1","0","1","3"]),
+        ]),
+        Test("Тест граматику", 4, [
+          QuestionText("Как правильно писать слово?"),
+          QuestionSingleChoose("Сколько слогов в слове дерево? Выберети вариант:", ["-1","0","1","3"]),
+          QuestionMultyChoose("Выберети несколько вариантов:", ["-1","0","1","3"]),
         ]),
         Test("Тест граматику", 4, [
           QuestionText("Как правильно писать слово?"),
@@ -138,17 +146,17 @@ class _TestListScreenState extends State<TestListScreen> {
         ], 3),
         Test("Тест граматику", 9, [
           QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),
-        ], 6),
+        ], 7),
         Test("Тест граматику", 9, [
           QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),QuestionText("Как?"),
         ], 4),
       ];
 
-      testList[1].status = 1;
-      testList[2].status = 2;
-      testList[3].status = 2;
+      testList[3].status = 1;
       testList[4].status = 2;
       testList[5].status = 2;
+      testList[6].status = 2;
+      testList[7].status = 2;
 
     });
   }
@@ -165,9 +173,12 @@ class _TestListScreenState extends State<TestListScreen> {
     for (int i = 0; i < testList.length; i++) {
       list.add(_buildTestBoxStec(context, i));
     }
+    list.add(Container(height: 10,));
     var size = MediaQuery.of(context).size;
-    return Column(
-      children: list,
+    return SingleChildScrollView(
+        child: Column(
+          children: list,
+        ),
     );
   }
 
@@ -236,94 +247,94 @@ class _TestListScreenState extends State<TestListScreen> {
     return GestureDetector(
       onTap: () => { testList[index].status == 0 ? Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: TestSlideScreen()) ) : 0},
       child: Container(
+        margin: EdgeInsets.only(left: 20,right: 20, top: 10),
         width: size.width,
         height: 95,
-        margin: EdgeInsets.only(top: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)), //here
-              color: testList[index].status==0 ? Colors.white : testList[index].status==1?Colors.black12.withAlpha(12): Colors.black12.withAlpha(12),
-             boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(2,2), blurRadius: 5 )],
+          color: testList[index].status==0 ? Colors.white : testList[index].status==1?Colors.black12.withAlpha(12): Colors.black12.withAlpha(12),
+          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(2,2), blurRadius: 5 )],
           //  border: Border.all(color: Colors.black54, width: 1, )
         ),
         child: Stack(
-            children: [
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      width: testList[index].points>=0?size.width * testList[index].points / testList[index].questionsList.length:0,
-                      height: 95,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)), //here
-                          color: applyColorC,
-                       //   boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 3, offset: Offset(0,3))]
-                      )
-                  )
-              ),
-              Container(
-                height: 95,
-                width: size.width*1,
-                color: testList[index].points>=0 ? Colors.transparent : Colors.transparent,
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              height: 30,
-                              child: AutoSizeText(
-                                testList[index].title,
-                                style: TextStyle(
-                                  // fontFamily: 'Regular',
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 22,
-                                  color: Colors.black87.withAlpha((testList[index].status != 0)?128:255),
-                                ),
-                                maxLines: 1,
+          children: [
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                    width: testList[index].points>=0?size.width * testList[index].points / testList[index].questionsList.length:0,
+                    height: 95,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)), //here
+                      color: applyColorC,
+                      //   boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 3, offset: Offset(0,3))]
+                    )
+                )
+            ),
+            Container(
+              height: 95,
+              width: size.width*1,
+              color: testList[index].points>=0 ? Colors.transparent : Colors.transparent,
+              padding: EdgeInsets.all(15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            height: 30,
+                            child: AutoSizeText(
+                              testList[index].title,
+                              style: TextStyle(
+                                // fontFamily: 'Regular',
+                                fontWeight: FontWeight.w300,
+                                fontSize: 22,
+                                color: Colors.black87.withAlpha((testList[index].status != 0)?128:255),
                               ),
-                            )),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: _buildTestStatus(index))
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: _buildTestNumberQuest(index)),
-                        Container(
-                          height: 30,
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: AutoSizeText.rich(
-                                new TextSpan(
-                                  style: TextStyle(fontSize: 18, color: Colors.black54.withAlpha((testList[index].status != 0)?128:255), fontWeight: FontWeight.w300),
-                                  children: <TextSpan>[
-                                  new TextSpan(text: ""),
-                               //     new TextSpan(text: "Сложность: "),
-                               //     new TextSpan(text: testList[index].hardness.toString(), style: new TextStyle(
-                                 //       fontSize: (18 + hardnesK).toDouble(),
-                                     //   color: ChooseColor(testList[index].hardness), //Colors.black54,//
-                                     //   shadows: [Shadow(blurRadius: 3, offset: Offset(1,1), color: Colors.black54)],
-                              //          fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
-                                maxLines: 1,
-                              ),
+                              maxLines: 1,
+                            ),
+                          )),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: _buildTestStatus(index))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: _buildTestNumberQuest(index)),
+                      Container(
+                        height: 30,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: AutoSizeText.rich(
+                            new TextSpan(
+                              style: TextStyle(fontSize: 18, color: Colors.black54.withAlpha((testList[index].status != 0)?128:255), fontWeight: FontWeight.w300),
+                              children: <TextSpan>[
+                                new TextSpan(text: ""),
+                                //     new TextSpan(text: "Сложность: "),
+                                //     new TextSpan(text: testList[index].hardness.toString(), style: new TextStyle(
+                                //       fontSize: (18 + hardnesK).toDouble(),
+                                //   color: ChooseColor(testList[index].hardness), //Colors.black54,//
+                                //   shadows: [Shadow(blurRadius: 3, offset: Offset(1,1), color: Colors.black54)],
+                                //          fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            maxLines: 1,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }

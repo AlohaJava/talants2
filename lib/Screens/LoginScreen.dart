@@ -3,9 +3,11 @@ import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:talants/MainStyle.dart';
 import 'package:talants/Navigation/BottomNavigation.dart';
 import 'package:talants/Screens/CreateRequestForRegScreen.dart';
+import 'package:talants/Screens/Favorites.dart';
 import 'package:talants/Screens/HelpScreen.dart';
 import 'package:talants/utils/api_utils.dart';
 
@@ -32,6 +34,8 @@ class _LoginPageState extends State<LoginScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    _emailFilter.text = "adm";
+    _passwordFilter.text = "12345678";
   }
 
   void dispose() {
@@ -56,7 +60,7 @@ class _LoginPageState extends State<LoginScreen> {
   }
 
   void _processLoginError(exception) {
-    showDialogError(exception, context);
+    showDialogError("Неправильный логин или пароль", context);
   }
 
   _loginToCC(BuildContext context, CubeUser user, {bool saveUser = false}) {
@@ -80,7 +84,8 @@ class _LoginPageState extends State<LoginScreen> {
       print("LOGINED!");
       LoginScreen.cubeUser=cubeUser;
       print(cubeUser.email+"USEER");
-      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: BottomNavigation()));
+      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: FavoritesScreen()));
+      //Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: BottomNavigation()));
       /*
        Navigator.push(
         context,
@@ -93,10 +98,11 @@ class _LoginPageState extends State<LoginScreen> {
 
     }).catchError(_processLoginError);
   }
+  final RoundedLoadingButtonController _btnController = new RoundedLoadingButtonController();
 
   buildContent() {
     var size = MediaQuery.of(context).size;
-    print("building");
+   // print("building");
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -188,18 +194,14 @@ class _LoginPageState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            FlatButton(
-                              height: 50,
-                              // Высота кнопки вход
-                              minWidth: size.width * 0.45,
-                              child: Text('Войти',
-                                  style: TextStyle(color: Colors.white, fontSize: 18)),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40.0),
+                            Container(
+                              width:size.width * 0.45,
+                              child: RoundedLoadingButton(
+                                color: MainStyle.primaryColor,
+                                child: Text('Войти', style: TextStyle(color: Colors.white, fontSize: 18)),
+                                controller: _btnController,
+                                onPressed: () {onLoginPressed();},
                               ),
-                              onPressed: () {onLoginPressed();},
-                              splashColor: Colors.white,
-                              color: MainStyle.primaryColor,
                             ),
                             GestureDetector(
                               onTap: () {
