@@ -22,9 +22,9 @@ class SettingsScreen extends StatelessWidget {
           backgroundColor: MainStyle.primaryColor,
           title: Text(
             'Личный кабинет',
-            style: TextStyle(fontWeight: FontWeight.bold),
+           //style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          centerTitle: false,
+          centerTitle: true,
         ),
         body: BodyLayout(currentUser),
         resizeToAvoidBottomInset: false);
@@ -89,13 +89,13 @@ class _BodyLayoutState extends State<BodyLayout> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(
-              top: Radius.circular(9.0), bottom: Radius.circular(9.0)),
+              top: Radius.circular(25.0), bottom: Radius.circular(25.0)),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
-              offset: Offset(0.0, 1.0), //(x,y)
-              blurRadius: 2.5,
+              offset: Offset(1.0, 2.0), //(x,y)
+              blurRadius: 5,
             )
           ]),
       child: Container(
@@ -161,7 +161,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       style: TextStyle(
                           fontSize: 24,
                           color: Colors.white,
-                          fontWeight: FontWeight.w400),
+                          fontWeight: FontWeight.w300),
                     ),
                     Container(
                         width: 50, height: 50, child: _buildAvatarFields()),

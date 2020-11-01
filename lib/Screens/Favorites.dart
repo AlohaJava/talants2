@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:talants/MainStyle.dart';
 import 'package:talants/Navigation/BottomNavigation.dart';
+import 'package:talants/styles.dart';
 
 import 'imageField/widget.dart';
 
@@ -62,10 +63,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(
-          f.img,
-          width: 24,
-          height: 24,
+        Container(
+          margin: EdgeInsets.only(top: 3),
+          child: Image.asset(
+            f.img,
+            width: 34,
+            height: 34,
+          ),
         ),
         SizedBox(width: 10,),
         Expanded(
@@ -74,17 +78,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(f.what, style:TextStyle(fontSize: 16)),
+                  Text(f.what, style:TextStyle(fontSize: 20)),
                   Container(
-                    width: 24,
-                    height: 24,
+                    width: 36,
+                    height: 36,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
@@ -100,7 +100,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           f.isActive=!f.isActive;
                         });
                       },
-                        child: !f.isActive?Icon(Icons.add):Icon(Icons.check)
+                        child: !f.isActive?Icon(Icons.add, color: StyleColor.importantColor,):Icon(Icons.check, color: Colors.green)
                     ),
                   ),
                 ],
@@ -115,11 +115,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   buildFavs() {
     List<Widget> widgets = [];
-    widgets.add(SizedBox(height: 5,));
+    widgets.add(SizedBox(height: 10,));
     widgets.add(
         Align(
             alignment: Alignment.topLeft,
-            child: Text("Что вам нравится?", style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold  ),)
+            child: Text("Ваши интересы?", style:TextStyle(fontSize: 22, fontWeight: FontWeight.bold  ),)
         )
     );
     widgets.add(SizedBox(height: 18,));
@@ -131,7 +131,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     widgets.add(
         Align(
             alignment: Alignment.topLeft,
-            child: Text("Ваши достижения?", style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold  ),)
+            child: Text("Ваши достижения?", style:TextStyle(fontSize: 22, fontWeight: FontWeight.bold  ),)
         )
     );
     widgets.add(SizedBox(height: 18,));
@@ -147,6 +147,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Container(
         color: MainStyle.primaryColor,
         child: Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
             margin: EdgeInsets.only(top: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),

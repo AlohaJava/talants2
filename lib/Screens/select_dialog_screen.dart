@@ -36,12 +36,9 @@ class SelectDialogScreen extends StatelessWidget {
       onWillPop: () => _onBackPressed(),
       child: Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-              onTap: (){ Navigator.pop(context);},
-              child: Icon(Icons.arrow_back)
-          ),
           automaticallyImplyLeading: false,
           backgroundColor: MainStyle.primaryColor,
+          centerTitle: true,
           title: Text(
             '${currentUser.fullName}',
           ),
@@ -72,7 +69,7 @@ class SelectDialogScreen extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey,
+                        color: Colors.transparent,
                         offset: Offset(0.0, 1.0), //(x,y)
                         blurRadius: 5.0,
                       )

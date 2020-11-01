@@ -39,8 +39,10 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       statusBarColor: MainStyle.primaryColor, // status bar color
     ));
     setState(() {
-      inerIndex = widget.ScreenNumb;
+      inerIndex = 0;//widget.ScreenNumb;
     });
+
+
   }
 
   void dispose() {

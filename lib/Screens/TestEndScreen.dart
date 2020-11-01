@@ -112,7 +112,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
               Container(height: 20,),
               Center(child: Text("Наставники для вас:", style: TextStyle(fontFamily: "Montserrat", fontSize: 26))),
               Container(height: 10,),
-              Container(child: SizedBox(height: 110, width: size.width, child: _buildChatsList(),)),
+              Container(child: SizedBox(height: 90, width: size.width, child: _buildChatsList(),)),
 
               Container(height: 20,),
               Center(child: Text("События для вас:", style: TextStyle(fontFamily: "Montserrat", fontSize: 26))),
@@ -335,11 +335,11 @@ class _TestEndScreenState extends State<TestEndScreen> {
   Widget _buildChatsList() {
     List<Widget> list = List<Widget>();
 
-    list.add(Container(width: 20,));
+    list.add(Container(width: 10,));
     for (int i = 0; i < testList.length; i++) {
       list.add(_buildChats(context, i));
     }
-    list.add(Container(width: 20,));
+    list.add(Container(width: 10,));
     var size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -360,6 +360,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
         height: 90,
         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(50.0)),),
         padding: EdgeInsets.all(5),
+        margin: EdgeInsets.only(left:10),
         child: Stack(
           children: [
             Center(
