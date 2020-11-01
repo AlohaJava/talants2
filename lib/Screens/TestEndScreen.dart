@@ -212,7 +212,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       height: 30,
-                      width: size.width*0.7,
+                      width: size.width*0.68,
                       child: AutoSizeText(
                         testList[index].title,
                         style: TextStyle(
@@ -228,7 +228,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       height: 30,
-                      width: size.width*0.7,
+                      width: size.width*0.68,
                       child: AutoSizeText(
                         testList[index].text.length<30?testList[index].text:testList[index].text.substring(0,30) + "...",
                         style: TextStyle(
@@ -294,7 +294,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                         height: 50,
-                        width: size.width*0.6,
+                        width: size.width*0.55,
                         child: AutoSizeText(
                           testList[index].title,
                           style: TextStyle(
@@ -310,7 +310,7 @@ class _TestEndScreenState extends State<TestEndScreen> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                         height: 60,
-                        width: size.width*0.6,
+                        width: size.width*0.55,
                         child: AutoSizeText(
                           testList[index].text.length<70?testList[index].text:testList[index].text.substring(0,70) + "...",
                           style: TextStyle(

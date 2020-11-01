@@ -171,7 +171,7 @@ class _BodyLayoutState extends State<BodyLayout> {
               Container(
                 color: MainStyle.primaryColor,
                 width: double.infinity,
-                height: 400,
+                height: 600,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius:
@@ -215,6 +215,11 @@ class _BodyLayoutState extends State<BodyLayout> {
                                       "assets/images/informatics.png"),
                                   SizedBox(height: 14,),
                                   buildCard(
+                                      "Загрузить достижения",
+                                      "Здесь вы можете загрузить свои\nсертификаты",
+                                      "assets/images/diploma.png"),
+                                  SizedBox(height: 14,),
+                                  buildCard(
                                       "Бонусы и акции",
                                       "Информация о текущих акциях",
                                       "assets/images/bonus.png"),
@@ -227,7 +232,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                                   buildCard(
                                       "Правила приема",
                                       "Узнать за что дают баллы",
-                                      "assets/images/ucheba.png"),
+                                      "assets/images/priem.png"),
                                 ],
                               ),
                             ),
